@@ -27,10 +27,6 @@ class Player {
 
 	move() {
 		let leap = Math.ceil(Math.random() * 6);
-		return this.validateMove(leap);
-	}
-
-	validateMove(leap) {
 		let oldPos = this.position;
 		let newPos = this.position + leap;
 		let addText = ``;
@@ -58,13 +54,11 @@ class Game {
 	constructor(players) {
 		this.playNum = 1;
 		this.gameOver = false;
-		this.players = [];
-		this.winner = "";
-
-		players.forEach(name => {
+		this.players = players.map(name => {
 			let player = new Player(name);
-			this.players.push(player);
+			return player;
 		});
+		this.winner = "";
 	}
 
 	turn() {
@@ -72,7 +66,7 @@ class Game {
 		let result = currentPlayer.move();
 		console.log(`${this.playNum}: ${result}`);
 
-		if (currentPlayer.position == 100) {
+		if (currentPlayer.position === 100) {
 			this.winner = currentPlayer.name;
 			console.log(`The winner is ${this.winner}!`);
 			this.gameOver = true;
